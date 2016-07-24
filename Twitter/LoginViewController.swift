@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
+
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +25,17 @@ class LoginViewController: UIViewController {
     }
     
 
+    @IBAction func loginAction(sender: AnyObject) {
+        
+        let client = TwitterClient.shareInstance
+        client.login({ () -> () in
+            print("I logged in")
+            self.performSegueWithIdentifier("loginSegue", sender: nil)
+            
+        }) { (error: NSError) -> ()  in
+                print(error.localizedDescription)
+        }
+    }
     /*
     // MARK: - Navigation
 
